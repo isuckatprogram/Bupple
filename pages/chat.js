@@ -27,7 +27,8 @@ class Chat extends React.Component{
         window.socket = new WebSocket(`wss://e624eb103653.ngrok.io/${this.state.id}`)
 
         socket.onmessage = (message)=>{
-            message = JSON.parse(message.message)
+            message = JSON.parse(message.data)
+            console.log(message)
             if(message.name == `text`){
                 this.message(`${message.author}: ${message.content}`)
             }
@@ -41,14 +42,18 @@ class Chat extends React.Component{
         }
         socket.onopen = ()=>{
             this.message(`Connection is opened!`)
-            socket.send(JSON.stringify({name: 'chat', id: this.state.id}))
+            socket.send(JSON.stringify({name: 'chat', id: window.id}))
         }
     }
     sendMessage(e){
         e.preventDefault()
-        var message = document.getElementById('message').value
+        var message = document.getElementById('message')
+        if(window.id == undefined){
+            alert('oh oh')
+            return
+        }
+        socket.send(JSON.stringify({name: 'text', content: message.value, author: this.getCookie('nickname'), id: window.id}))
         document.getElementById('message').value = ''
-        socket.send(JSON.stringify({name: 'text', content: message.value, author: this.getCookie('nickname'), id: this.state.id}))
     }
     message(message){
         var div = document.createElement('div')
@@ -56,11 +61,11 @@ class Chat extends React.Component{
         p.innerText = message
         div.append(p)
         document.getElementById('messages').append(div)
-        document.getElementById('messages').scroll()
+        div.scrollIntoView(true)
     }
     componentDidMount(){
         if(this.state.id == undefined){
-            this.setState({id: location.pathname.split('/')[2]})
+            window.id = new URL(location).searchParams.get('id')
         }
         this.loadWebSocket()
     }
@@ -71,7 +76,7 @@ class Chat extends React.Component{
                 
             </div>
             <form id="form" onSubmit={this.sendMessage.bind(this)}>
-                <input type="text" autoFocus autoCorrect id="message"/>
+                <input type="text" autoFocus={true} id="message"/>
             </form>
             <style jsx>{`
                 #messages{

@@ -48,7 +48,7 @@ class App extends React.Component {
                 user.style.borderRadius = `50%`
                 user.style.width = `190px`
                 user.style.height = `190px`
-                user.style.cursor = `pointer`
+                user.style.cursor = `move`
                 user.style.position = `absolute`
                 user.style.bottom = `${Math.floor(Math.random() * 50) + 2}%`
                 user.style.left = `${Math.floor(Math.random() * 50) + 2}%`
@@ -135,9 +135,9 @@ class App extends React.Component {
     render() {
         return (
             <div style={{ textAlign: 'center' }} id="users">
-                <iframe id="chat" src={`/chat?id=${this.state.id}`}></iframe>
+                <iframe id="chat" src={`/chat?id=${this.state.id}`} height="250" width="250" style={{padding: '10px 10px'}}></iframe>
                 <div className="user you" style={{ position: 'absolute', bottom: '42%', left: '15%' }} draggable={true}>
-                    <img src="/static/profile.svg" />
+                    <img src="/static/profile.svg" draggable={false}/>
                 </div>
                 <div className="video" style={{ position: 'absolute', bottom: '32%', left: '33%' }} hidden>
                     <video autoPlay muted id="you"></video>
@@ -149,7 +149,7 @@ class App extends React.Component {
                         border-radius: 50%;
                         width: 190px;
                         height: 190px;
-                        cursor: pointer;
+                        cursor: move;
                     }
                     .user img{
                         border: 0px solid;

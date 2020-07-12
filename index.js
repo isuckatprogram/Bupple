@@ -73,6 +73,7 @@ app.prepare().then(() => {
                             return
                         }
                         user.ws.send(JSON.stringify({ name: 'newUser', value: message.name, id: ws.id}))
+                        ws.send(JSON.stringify({ name: 'newUser', value: message.name, id: ws.id }))
                     })
                     room.users.push({ 'ws': ws, name: message.name })
                     ws.send(JSON.stringify({ name: 'id', value: room.id }))
@@ -95,7 +96,7 @@ app.prepare().then(() => {
                         users: [ws]
                     }
                 }else{
-                    chat[message.id].users.append(ws)
+                    chat[message.id].users.push(ws)
                 }
             }else if(message.name == `text`){
                 room = chat[message.id]
