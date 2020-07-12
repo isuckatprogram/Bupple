@@ -1,0 +1,19 @@
+{
+  "name": "bupple",
+  "version": "1.0.0",
+  "description": "A website for peple to find other people to chat and video chat with.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "next": "^9.4.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "ws": "^7.3.1"
+  }
+}
